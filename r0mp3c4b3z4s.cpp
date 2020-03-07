@@ -48,7 +48,7 @@ Cola::Cola(int n)
 
 bool Pila::overflow()
 {
-	if(top == sizeof(stack))
+	if(top == 5000)
 	{
 		return true;
 	}
@@ -157,47 +157,252 @@ int Cola::dequeue()
 	return aux;
 }
 
-void mover(int x, int y, int* tablero[], Pila* px, Pila* py)
+void mover(int x, int y, int* tablero[], Pila* px, Pila* py, int n)
 {
 	if(tablero[x][y] == 0)
 	{
 		cout << "Prueba otra coordenada" << endl;
 		return;
 	}
+	else if(x == 0 && y ==0)//ESQUINA SUPERIOR IZQUIERDA
+	{
+
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x+1);
+			py->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x][y+1] == 0) //Revisa si a la derecha está libre
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y+1);
+			return;
+		}	
+	}
+	else if(x==0 && y == n-1) //ESQUINA SUPERIOR DERECHA
+	{
+		if(tablero[x][y-1] == 0) //Revisa si a la izquierda está libre
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y-1);
+			return;
+		}
+		else if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x+1);
+			py->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+	}
+	else if(x==n-1 && y == 0) //ESQUINA INFERIOR IZQUIERDA
+	{
+		if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x-1);
+			py->push(y);
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y+1);
+			return;
+		}
+	}
+	else if(x==n-1 && y == n-1) //ESQUINA INFERIOR DERECHA
+	{
+		if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y-1);
+			return;
+		}
+		else if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x-1);
+			py->push(y);
+			return;
+		}
+	}
+	else if(x == 0)
+	{
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x+1);
+			py->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y+1);
+			return;
+		}
+		else if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y-1);
+			return;
+		}
+	}
+	else if(x == n-1)
+	{
+		if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x-1);
+			py->push(y);
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y+1);
+			return;
+		}
+		else if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y-1);
+			return;
+		}
+	}
+	else if(y == 0)
+	{
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x+1);
+			py->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x-1);
+			py->push(y);
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y+1);
+			return;
+		}
+	}
+	else if(y == n-1)
+	{
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x+1);
+			py->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x-1);
+			py->push(y);
+			return;
+		}
+		else if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			px->push(x);
+			py->push(y-1);
+			return;
+		}
+	}
 	else if(tablero[x+1][y] == 0) //Revisa si abajo está libre
 	{
 		tablero[x+1][y] = tablero[x][y];
 		tablero[x][y] = 0;
-		px->push(x);
+		px->push(x+1);
 		py->push(y);
-		cout << "Just a validation 1" << endl;
+		//cout << "Just a validation 1" << endl;
 		return;
 	}
 	else if(tablero[x-1][y] == 0)
 	{
-		cout << "Just a validation 2" << endl;
+		//cout << "Just a validation 2" << endl;
 		tablero[x-1][y] = tablero[x][y];
 		tablero[x][y] = 0;
-		px->push(x);
+		px->push(x-1);
 		py->push(y);
 		return;
 	}
 	else if(tablero[x][y+1] == 0)
 	{
-		cout << "Just a validation 3" << endl;
+		//cout << "Just a validation 3" << endl;
 		tablero[x][y+1] = tablero[x][y];
 		tablero[x][y] = 0;
 		px->push(x);
-		py->push(y);
+		py->push(y+1);
 		return;
 	}
 	else if(tablero[x][y-1] == 0)
 	{
-		cout << "Just a validation 4" << endl;
+		//cout << "Just a validation 4" << endl;
 		tablero[x][y-1] = tablero[x][y];
 		tablero[x][y] = 0;
 		px->push(x);
-		py->push(y);
+		py->push(y-1);
 		return;
 	}
 	else
@@ -205,12 +410,266 @@ void mover(int x, int y, int* tablero[], Pila* px, Pila* py)
 		cout << "Prueba otra coordenada" << endl;
 		return;
 	}
-	cout << "chale" << endl;
+}
+
+void mover_s(int x, int y, int* tablero[], Pila* pxe, Pila* pye, int n)
+{
+	if(tablero[x][y] == 0)
+	{
+		cout << "Prueba otra coordenada" << endl;
+		return;
+	}
+	else if(x == 0 && y ==0)//ESQUINA SUPERIOR IZQUIERDA
+	{
+
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x+1);
+			//pye->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x][y+1] == 0) //Revisa si a la derecha está libre
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y+1);
+			return;
+		}	
+	}
+	else if(x==0 && y == n-1) //ESQUINA SUPERIOR DERECHA
+	{
+		if(tablero[x][y-1] == 0) //Revisa si a la izquierda está libre
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y-1);
+			return;
+		}
+		else if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x+1);
+			//pye->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+	}
+	else if(x==n-1 && y == 0) //ESQUINA INFERIOR IZQUIERDA
+	{
+		if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x-1);
+			//pye->push(y);
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y+1);
+			return;
+		}
+	}
+	else if(x==n-1 && y == n-1) //ESQUINA INFERIOR DERECHA
+	{
+		if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y-1);
+			return;
+		}
+		else if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x-1);
+			//pye->push(y);
+			return;
+		}
+	}
+	else if(x == 0)
+	{
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x+1);
+			//pye->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y+1);
+			return;
+		}
+		else if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y-1);
+			return;
+		}
+	}
+	else if(x == n-1)
+	{
+		if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x-1);
+			//pye->push(y);
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y+1);
+			return;
+		}
+		else if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y-1);
+			return;
+		}
+	}
+	else if(y == 0)
+	{
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x+1);
+			//pye->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x-1);
+			//pye->push(y);
+			return;
+		}
+		else if(tablero[x][y+1] == 0)
+		{
+			//cout << "Just a validation 3" << endl;
+			tablero[x][y+1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y+1);
+			return;
+		}
+	}
+	else if(y == n-1)
+	{
+		if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+		{
+			tablero[x+1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x+1);
+			//pye->push(y);
+			//cout << "Just a validation 1" << endl;
+			return;
+		}
+		else if(tablero[x-1][y] == 0)
+		{
+			//cout << "Just a validation 2" << endl;
+			tablero[x-1][y] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x-1);
+			//pye->push(y);
+			return;
+		}
+		else if(tablero[x][y-1] == 0)
+		{
+			//cout << "Just a validation 4" << endl;
+			tablero[x][y-1] = tablero[x][y];
+			tablero[x][y] = 0;
+			//pxe->push(x);
+			//pye->push(y-1);
+			return;
+		}
+	}
+	else if(tablero[x+1][y] == 0) //Revisa si abajo está libre
+	{
+		tablero[x+1][y] = tablero[x][y];
+		tablero[x][y] = 0;
+		//pxe->push(x+1);
+		//pye->push(y);
+		//cout << "Just a validation 1" << endl;
+		return;
+	}
+	else if(tablero[x-1][y] == 0)
+	{
+		//cout << "Just a validation 2" << endl;
+		tablero[x-1][y] = tablero[x][y];
+		tablero[x][y] = 0;
+		//pxe->push(x-1);
+		//pye->push(y);
+		return;
+	}
+	else if(tablero[x][y+1] == 0)
+	{
+		//cout << "Just a validation 3" << endl;
+		tablero[x][y+1] = tablero[x][y];
+		tablero[x][y] = 0;
+		//pxe->push(x);
+		//pye->push(y+1);
+		return;
+	}
+	else if(tablero[x][y-1] == 0)
+	{
+		//cout << "Just a validation 4" << endl;
+		tablero[x][y-1] = tablero[x][y];
+		tablero[x][y] = 0;
+		//pxe->push(x);
+		//pye->push(y-1);
+		return;
+	}
+	else
+	{
+		cout << "Prueba otra coordenada" << endl;
+		return;
+	}
 }
 
 int main()
 {
-	int n, i, j, a=0, x, y, count, azarx, azary, tope;
+	int n, i, j, a=0, x, y, count, azarx, azary, tope, comp, an;
 	bool win = false;
 	srand(time(NULL));
 	
@@ -225,10 +684,16 @@ int main()
 	}
 	
 	Pila *px;
-	px = new Pila(n*n*n);
+	px = new Pila(5000);
 	
 	Pila *py;
-	py = new Pila(n*n*n);
+	py = new Pila(5000);
+	
+	Pila *pxe;
+	pxe = new Pila(5000);
+	
+	Pila *pye;
+	pye = new Pila(5000);
 	
 	for(i=0; i<n; i++)
 	{
@@ -251,68 +716,170 @@ int main()
 	}
 	
 	//REVOLVER 
-	/*
 	tope = n*n;
 	count = 0;
+	comp = 0;
 	do
 	{
 		azarx = rand()%n;
 		azary = rand()%n;
-		if(tablero[azarx+1][azary] == 0)
+		
+		if(tablero[azarx][azary] == 0)
 		{
-			mover(azarx, azary, tablero, px, py);
-			count++;
-			
-			//IMPRIME LA MATRIZ
-				
-			for(i=0; i<n; i++)
+			//cout << "Prueba otra coordenada" << endl;
+		}
+		else if(azarx == 0 && azary ==0)//ESQUINA SUPERIOR IZQUIERDA
+		{
+	
+			if(tablero[azarx+1][azary] == 0) //Revisa si abajo está libre
 			{
-				for(j=0; j<n; j++)
-				{
-					cout << tablero[i][j] << "\t"; 
-				}
-				cout << endl;
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
 			}
+			else if(tablero[azarx][azary+1] == 0) //Revisa si a la derecha está libre
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}	
+		}
+		else if(azarx==0 && azary == n-1) //ESQUINA SUPERIOR DERECHA
+		{
+			if(tablero[azarx][azary-1] == 0) //Revisa si a la izquierda está libre
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx+1][azary] == 0) //Revisa si abajo está libre
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(azarx==n-1 && azary == 0) //ESQUINA INFERIOR IZQUIERDA
+		{
+			if(tablero[azarx-1][azary] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary+1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(azarx==n-1 && azary == n-1) //ESQUINA INFERIOR DERECHA
+		{
+			if(tablero[azarx][azary-1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx-1][azary] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(azarx == 0)
+		{
+			if(tablero[azarx+1][azary] == 0) //Revisa si abajo está libre
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary+1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary-1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(azarx == n-1)
+		{
+			if(tablero[azarx-1][azary] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary+1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary-1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(azary == 0)
+		{
+			if(tablero[azarx+1][azary] == 0) //Revisa si abajo está libre
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx-1][azary] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary+1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(azary == n-1)
+		{
+			if(tablero[azarx+1][azary] == 0) //Revisa si abajo está libre
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx-1][azary] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+			else if(tablero[azarx][azary-1] == 0)
+			{
+				mover(azarx, azary, tablero, px, py, n);
+				count++;
+			}
+		}
+		else if(tablero[azarx+1][azary] == 0) //Revisa si abajo está libre
+		{
+			mover(azarx, azary, tablero, px, py, n);
+			count++;
 		}
 		else if(tablero[azarx-1][azary] == 0)
 		{
-			mover(azarx, azary, tablero, px, py);
+			mover(azarx, azary, tablero, px, py, n);
 			count++;
-			
-			//IMPRIME LA MATRIZ
-				
-			for(i=0; i<n; i++)
-			{
-				for(j=0; j<n; j++)
-				{
-					cout << tablero[i][j] << "\t"; 
-				}
-				cout << endl;
-			}
 		}
 		else if(tablero[azarx][azary+1] == 0)
 		{
-			mover(azarx, azary, tablero, px, py);
+			mover(azarx, azary, tablero, px, py, n);
 			count++;
-			
-			//IMPRIME LA MATRIZ
-				
-			for(i=0; i<n; i++)
-			{
-				for(j=0; j<n; j++)
-				{
-					cout << tablero[i][j] << "\t"; 
-				}
-				cout << endl;
-			}
 		}
 		else if(tablero[azarx][azary-1] == 0)
 		{
-			mover(azarx, azary, tablero, px, py);
+			mover(azarx, azary, tablero, px, py, n);
 			count++;
-			
-			//IMPRIME LA MATRIZ
-				
+		}
+		else
+		{
+			//cout << "Prueba otra coordenada" << endl;
+		}
+		
+		if(comp != count)
+		{
 			for(i=0; i<n; i++)
 			{
 				for(j=0; j<n; j++)
@@ -321,32 +888,20 @@ int main()
 				}
 				cout << endl;
 			}
+			cout << "-----------------" << endl;
+			cout << "#De revolvidas: " << count << endl;
+			comp++;
 		}
 	}while(count != tope);
-	*/
+	//REVOLVER ^
 	
+	mover(azarx, azary, tablero, px, py, n);
+	count++;
 	
 	count = 0;
 	a=0;
 	do
-	{
-		for(i=0; i<n; i++)
-		{
-			for(j=0; j<n; j++)
-			{
-				a = a + 1;
-				if(tablero[i][j] == a)
-				{
-					count++;
-				}
-			}
-		}
-		if(count == n*n)
-		{
-			win = true;
-		}
-		count = 0;
-		
+	{	
 		do
 		{
 			cout << "Dame la coordenada de x:" << endl;
@@ -359,10 +914,9 @@ int main()
 			cin>>y;
 		}while(y > n-1 || y < 0);
 		
-		cout << "Hora de mover la pieza" << endl;
+		//cout << "Hora de mover la pieza" << endl;
 		//MOVER LA PIEZA
-		mover(x, y, tablero, px, py);
-		cout << "F" << endl;
+		mover(x, y, tablero, px, py, n);
 		
 		for(i=0; i<n; i++)
 		{
@@ -372,8 +926,109 @@ int main()
 			}
 			cout << endl;
 		}
+		
+		//VALIDAR SI GANASTE
+		if(tablero[n-1][n-1] == 0)
+		{
+			count++;
+		}
+		for(i=0; i<n; i++)
+		{
+			for(j=0; j<n; j++)
+			{
+				a = a + 1;
+				if(tablero[i][j] == a)
+				{
+					count++;
+				}
+			}
+		}
+		if(count == (n*n))
+		{
+			win = true;
+		}
+		//cout << "Count: " << count << endl;
+		count = 0;
+		a = 0;
+		
+		do
+		{	
+			cout << "Si quieres regresar un movimiento escribe -1, si quieres adelantar un movimiento escribe 1, si quieres que se resuelva automáticamente escribe 2, y si no quieres hacer uso de estas opciones escribe 0" << endl;
+			cin>>an;
+		}while(an < -1 || an > 2);
+		switch(an)
+		{
+			case -1:
+				x = px->pop();
+				y = py->pop();
+				mover_s(x, y, tablero, px, py, n);
+				for(i=0; i<n; i++)
+				{
+					for(j=0; j<n; j++)
+					{
+						cout << tablero[i][j] << "\t"; 
+					}
+					cout << endl;
+				}
+				break;
+			case 0:
+				break;
+			case 1:
+				x = pxe->pop();
+				y = pye->pop();
+				mover_s(x, y, tablero, px, py, n);
+				for(i=0; i<n; i++)
+				{
+					for(j=0; j<n; j++)
+					{
+						cout << tablero[i][j] << "\t"; 
+					}
+					cout << endl;
+				}
+				if(tablero[n-1][n-1] == 0)
+				{
+					count++;
+				}
+				for(i=0; i<n; i++)
+				{
+					for(j=0; j<n; j++)
+					{
+						a = a + 1;
+						if(tablero[i][j] == a)
+						{
+						count++;
+						}	
+					}
+				}
+				if(count == (n*n))
+				{
+					win = true;
+				}
+				count = 0;
+				a = 0;
+				break;
+			case 2:
+				do
+				{
+					x = px->pop();
+					y = py->pop();
+					mover_s(x, y, tablero, px, py, n);
+					for(i=0; i<n; i++)
+					{
+						for(j=0; j<n; j++)
+						{
+							cout << tablero[i][j] << "\t"; 
+						}
+						cout << endl;
+					}
+					cout << "----------------" << endl;
+				}while(px->gettop() != 0);
+				win = true;
+				break;	
+		}
+		
 	}while(win == false);
 	
-	cout << "Ganaste xd" << endl;
+	cout << "¡Ganaste!" << endl;
 	
 }

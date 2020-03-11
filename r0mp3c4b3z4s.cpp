@@ -3,6 +3,9 @@
 #include <time.h>
 #include <stdlib.h>
 
+//Falta que no puedas regresar todos los movimientos(Hacer trampa)
+//Terminar lo del punto extra
+
 using namespace std;
 
 class Pila
